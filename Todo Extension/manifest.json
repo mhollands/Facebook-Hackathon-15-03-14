@@ -6,19 +6,18 @@
   "version": "1.0",
 
   "permissions": [
-	"http://www.google.com/*",
-	"https://code.jquery.com/jquery-1.9.1.js"
+	"tabs"
   ],
 
   "content_scripts": [
 	{
 	    "matches": [
         "http://www.facebook.com/*",
-        "https://www.facebook.com/*"
+        "https://www.facebook.com/*",
+		"https://www.facebook.com/events/*/*"
         ],
         "js": ["runscript.js"],
-		"run_at": "document_end",
-		"all_frames":true		
+		"run_at": "document_start"		
 	}
   ]
 }
