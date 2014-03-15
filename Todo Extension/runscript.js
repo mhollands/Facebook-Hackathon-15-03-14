@@ -8,7 +8,7 @@
 
     if (isEvent)
     {
-        rems = document.getElementsByClassName("_1_fs")[0];
+        rems = document.getElementById("contentArea");
         eventid = getEventIDFromUrl();
     }
     else
@@ -79,8 +79,8 @@
         }
 
         if (isEvent) {
-			//rems.insertBefore(div, document.getElementById("event_related_events"));
-			rems.insertBefore(div);
+			rems.insertBefore(div, document.getElementById("event_description"));
+			//rems.insertBefore(div);
             div.style.backgroundColor = "white";
         }
         else {
