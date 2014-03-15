@@ -79,11 +79,12 @@
         }
 
         if (isEvent) {
-            rems.insertBefore(div, document.getElementById("event_related_events"));
+			//rems.insertBefore(div, document.getElementById("event_related_events"));
+			rems.insertBefore(div);
             div.style.backgroundColor = "white";
         }
         else {
-            rems.insertBefore(div, document.getElementById("pagelet_trending_tags_and_topics"));
+            rems.insertBefore(div);
         }
         rems.zIndex = '100';
     }
