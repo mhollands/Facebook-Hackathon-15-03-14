@@ -1,27 +1,12 @@
 ﻿
-/*
-var connection = new ActiveXObject("ADODB.Connection");
 
-var connectionstring = "Data Source=sql2.freesqldatabase.com;Initial Catalog=sql233229;User ID=sql233229;Password=VN2URbE4q9Qm;";
-
-connection.Open(connectionstring);
-var rs = new ActiveXObject("ADODB.Recordset");
-
-var command = 'CREATE TABLE table_name(col1 int);';
-
-rs.Open("CREATE", connection);
-rs.MoveFirst
-while (!rs.eof) {
-    document.write(rs.fields(1));
-    rs.movenext;
-}
-
-rs.close;
-connection.close;
-
-//myFunction();
-*/
 function func() {
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'http://www.parsecdn.com/js/parse-1.2.13.min.js');
+    document.head.insertBefore(script);
+
+    //myFunction();
 
     var isEvent = (document.URL.indexOf("https://www.facebook.com/events/") == 0);
 
@@ -100,17 +85,14 @@ function func() {
         }
 
         if (isEvent) {
-            
             var createbox = document.createElement('input');
             createbox.setAttribute('type', 'text');
             createbox.setAttribute('value', 'Create new task...');
+            createbox.setAttribute('id', 'createbox');
             createbox.style.marginLeft = "5em";
+            createbox.style.width = "50%";
             createbox.onfocus = createbox_focussed;
             div.insertBefore(createbox);
-            
-            //var frame = document.createElement('iframe');
-            //frame.src = "http://stackoverflow.com/questions/18228993/textbox-default-text-make-dissapear-on-focus";
-            //div.insertBefore(frame);
         }
        
 
@@ -140,9 +122,11 @@ window.setInterval(function () {
 
 var myfileurl = "http://www.this-page-intentionally-left-blank.org/";
 
-function createbox_focussed(e)
+function createbox_focussed()
 {
-    alert(e.innerText);
+    if (document.getElementById('createbox').getAttribute('value') == 'Create new task...') {
+        document.getElementById('createbox').setAttribute('value', '');
+    }
 }
 
 function checkbox_toggle()
@@ -156,11 +140,8 @@ function getEventIDFromUrl()
     return eventID;
 }
 
-//document.getElementsByClassName("accordion")[0].accordion();
-
 function myFunction()
 {
-    loadjscssfile("parse-1.2.13.min.js", "js") //dynamically load and add this .js file
 
     Parse.$ = jQuery;
     Parse.initialize("3bWxW7KCxkHuf0OeM2s3KhTneI1j23ZnVu3hfvzK","RZ0WWQQFWQa9tFPyPreB1V9Amu0ZGnWzE0X8y48t");
