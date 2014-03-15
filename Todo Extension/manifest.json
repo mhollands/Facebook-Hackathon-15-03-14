@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Todo list",
+  "description": "my description",
+  "version": "1.0",
+
+  "permissions": [
+	"tabs"
+  ],
+
+  "content_scripts": [
+	{
+	    "matches": [
+        "http://www.facebook.com/*",
+        "https://www.facebook.com/*",
+		"https://www.facebook.com/events/*/*"
+        ],
+        "js": ["runscript.js"],
+		"run_at": "document_start"		
+	}
+  ]
+}
