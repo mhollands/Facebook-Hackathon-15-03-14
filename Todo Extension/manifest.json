@@ -1,12 +1,13 @@
 {
   "manifest_version": 2,
 
-  "name": "One-click Kittens",
-  "description": "This extension demonstrates a browser action with kittens.",
+  "name": "Todo list",
+  "description": "my description",
   "version": "1.0",
 
   "permissions": [
-	"http://www.google.com/*"
+	"http://www.google.com/*",
+	"https://code.jquery.com/jquery-1.9.1.js"
   ],
 
   "content_scripts": [
