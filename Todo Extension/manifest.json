@@ -1,23 +1,23 @@
 {
   "manifest_version": 2,
 
-  "name": "One-click Kittens",
-  "description": "This extension demonstrates a browser action with kittens.",
+  "name": "Todo list",
+  "description": "my description",
   "version": "1.0",
 
   "permissions": [
-	"http://www.google.com/*"
+	"tabs"
   ],
 
   "content_scripts": [
 	{
 	    "matches": [
         "http://www.facebook.com/*",
-        "https://www.facebook.com/*"
+        "https://www.facebook.com/*",
+		"https://www.facebook.com/events/*/*"
         ],
         "js": ["runscript.js"],
-		"run_at": "document_end",
-		"all_frames":true		
+		"run_at": "document_start"		
 	}
   ]
 }
