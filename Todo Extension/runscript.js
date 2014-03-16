@@ -37,6 +37,9 @@ function func() {
             createListBox.setAttribute('name', 'attending');
             //createListBox.setAttribute('multiple', 'multiple');
             createListBox.setAttribute('id', 'createlistbox');
+            createListBox.style.width = "35%";
+            createListBox.style.marginLeft = "1.2em";
+
             div.insertBefore(createListBox);
             //add create box
             var createbox = document.createElement('input');
@@ -44,8 +47,8 @@ function func() {
             createbox.setAttribute('value', 'Create new task...');
             createbox.setAttribute('id', 'createbox');
             createbox.setAttribute('name', 'newTaskName');
-            createbox.style.marginLeft = "5em";
-            createbox.style.width = "50%";
+            createbox.style.marginLeft = "1.2em";
+            createbox.style.width = "40%";
             createbox.onfocus = createbox_focussed;
             div.insertBefore(createbox);
 
@@ -53,6 +56,7 @@ function func() {
             createbutton.setAttribute('type', 'button');
             createbutton.value = "Create";
             createbutton.onclick = createButtonClick;
+            createbutton.style.marginLeft = "1.2em";
             div.insertBefore(createbutton);
 			
 			var createToken = document.createElement('div');

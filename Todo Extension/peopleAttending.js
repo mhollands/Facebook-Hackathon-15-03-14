@@ -9,11 +9,17 @@ var fbDiv = document.createElement('div');
     script.setAttribute('src', 'https://connect.facebook.net/en_UK/all.js');
     document.body.insertBefore(script);
 
-window.addEventListener("load", function() {
+if(document.readyState == "complete")
+{
+	console.log("blahblah");
+	window.setTimeout(populate, 500);
+}
+	
+window.addEventListener("load", populate)
+
+function populate(){
 	var names = [];
 	var accessToken = document.getElementById('token').innerHTML;
-
-	
 
 	FB.api('/' + eventID, { access_token : accessToken}, function(response) {
 
@@ -21,7 +27,6 @@ window.addEventListener("load", function() {
 		
 		
 		var isAdmin = (response.owner.name == myName);
-		
 		if(isAdmin == true)
 		{
 			FB.api('/' + eventID + '/attending/', { access_token : accessToken}, function(response) {
@@ -40,5 +45,5 @@ window.addEventListener("load", function() {
 		
 	});
 	
-});
+};
 
