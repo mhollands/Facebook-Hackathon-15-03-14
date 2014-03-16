@@ -84,8 +84,6 @@ window.setInterval(function () {
     }
 }, 1000);
 
-var myfileurl = "http://www.this-page-intentionally-left-blank.org/";
-
 function createbox_focussed()
 {
     if (document.getElementById('createbox').getAttribute('value') == 'Create new task...') {
@@ -157,7 +155,6 @@ function getEventsForUser(userName) {
                     query.equalTo("User_name", userName);
                     query.equalTo("Event_id", events[i][1]);
                                        
-
                     query.find({
                         success: function (tasks) {
                             for (var u = 0; u < tasks.length; u++) {
@@ -195,6 +192,18 @@ function getEventsForUser(userName) {
         }
     });
 
+}
+
+function createTask(userName, taskName, eventId, eventName)
+{
+    var Task = Parse.Object.extend("Task");
+    var newTask = new Task();
+
+    newTask.set('User_name', userName);
+    newTask.set('Task_name', taskName);
+    newTask.set('Event_id', eventId);
+    newTask.set('Event_name', eventName);
+    //newTask.set('')
 }
 
 
