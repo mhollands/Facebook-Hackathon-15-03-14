@@ -122,8 +122,49 @@ function createbox_focussed()
 
 function checkbox_toggle(sender)
 {
-    alert("toggle");
-    alert(sender.getAttribute('name'));
+    if (sender.target.checked == true) {
+
+        var r = confirm("Are you sure you have completed the task??");
+        if (r == true) {
+            var Task = Parse.Object.extend("Task");
+
+            var query = new Parse.Query(Task);
+
+            query.equalTo("objectId", sender.target.getAttribute('uid'));
+
+            query.find({
+                success: function (res) {
+                    res[0].set('completed', sender.target.checked);
+                    res[0].save();
+                },
+                error: function (error) {
+                    alert("error");
+                }
+            });
+        }
+        else {
+            sender.target.checked = false;
+        }
+    }
+    else {
+        alert("Unchecked");
+
+        var Task = Parse.Object.extend("Task");
+
+        var query = new Parse.Query(Task);
+
+        query.equalTo("objectId", sender.target.getAttribute('uid'));
+
+        query.find({
+            success: function (res) {
+                res[0].set('completed', sender.target.checked);
+                res[0].save();
+            },
+            error: function (error) {
+                alert("error");
+            }
+        });
+    }
 }
 
 function getEventIDFromUrl()
@@ -197,6 +238,7 @@ function getEventsForUser(userName) {
                                 var checkbox = document.createElement('input');
                                 checkbox.setAttribute("type", "checkbox");
                                 checkbox.setAttribute("name", tasks[u].get('Task_name'));
+                                checkbox.setAttribute('uid', tasks[u].id);
                                 checkbox.checked = tasks[u].get('completed');
                                 checkbox.onclick = checkbox_toggle;
                                 //put it after the text
