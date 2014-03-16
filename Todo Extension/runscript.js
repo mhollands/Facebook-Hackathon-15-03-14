@@ -2,10 +2,11 @@
 
 function func() {
 
+    
+
     Parse.$ = jQuery;
     Parse.initialize("AUHoFI9B7N6wfw0xjAtNv2AEpfNB7xpSlN67Rt07", "TkLHOAvw7UZDQ8LljMutMzRbGLeaS1rt5K3ByxFW");
 
-    //myFunction();
 
     var isEvent = (document.URL.indexOf("https://www.facebook.com/events/") == 0);
 
@@ -45,10 +46,17 @@ function func() {
             createbox.setAttribute('type', 'text');
             createbox.setAttribute('value', 'Create new task...');
             createbox.setAttribute('id', 'createbox');
+            createbox.setAttribute('name', 'newTaskName');
             createbox.style.marginLeft = "5em";
             createbox.style.width = "50%";
             createbox.onfocus = createbox_focussed;
             div.insertBefore(createbox);
+
+            var createbutton = document.createElement('input');
+            createbutton.setAttribute('type', 'button');
+            createbutton.value = "Create";
+            createbutton.onclick = createButtonClick;
+            div.insertBefore(createbutton);
 
             var s = document.createElement('script');
             s.src = chrome.extension.getURL('peopleAttending.js');
@@ -68,13 +76,30 @@ function func() {
         }
         rems.zIndex = '100';
 
-        getEventsForUser("Matt Hollands");
+
+        var myname = document.getElementsByClassName("fbxWelcomeBoxName");
+        getEventsForUser(myname[0].innerHTML);
 
     }
     else {
        //alert("not found");
     }
 
+}
+
+function createButtonClick()
+{
+    var taskName = document.getElementById('createbox').value;
+    var eventName = document.title;
+
+    var list = document.getElementById('createlistbox');
+    
+    for (var i = 0; i < list.options.length; i++) {
+        if (list.options[i].selected == true) {
+            alert(list.options[i].value);
+           createTask(list.options[i].value, taskName, getEventIDFromUrl(), eventName, 2014, 1, 1);
+        }
+    }
 }
 
 window.setInterval(function () {
@@ -194,7 +219,7 @@ function getEventsForUser(userName) {
 
 }
 
-function createTask(userName, taskName, eventId, eventName)
+function createTask(userName, taskName, eventId, eventName, year, month, date)
 {
     var Task = Parse.Object.extend("Task");
     var newTask = new Task();
@@ -203,7 +228,12 @@ function createTask(userName, taskName, eventId, eventName)
     newTask.set('Task_name', taskName);
     newTask.set('Event_id', eventId);
     newTask.set('Event_name', eventName);
-    //newTask.set('')
+    newTask.set('completed', false);
+    newTask.set('end_year', year);
+    newTask.set('end_month', month);
+    newTask.set('end_date', date);
+    
+    newTask.save();
 }
 
 

@@ -14,6 +14,7 @@ window.onload = function() {
 	accessToken = 'CAAFWXBUwFG4BAHiiJexQZCvy9Yk2U7rMIIzcF919FhwD2nsyrSnpntoTWHKaSU1lg9PJ2CbTkiiq2bhqZAZCQyJG4FuZBGceWKKSaehCNzpo4sjZA13RSZCof1iN4ySj9kmXMooyBxKalbx05mIFfB1xevkMX6Li1YTDrkdCcrpdzUihiZAwTXJFPKeQgsYpE0ZD';
 	FB.api('/' + eventID + '/attending/', { access_token : accessToken}, function(response) {
 		for (var i = 0; i < response.data.length; i++) {names[i] = (response.data[i].name);
+		names.sort();
 		var s = "";
 		for (name in names) {
 		s += "<option>" + names[name] + "</option>\n";
