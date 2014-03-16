@@ -59,11 +59,11 @@ function func() {
             createbutton.style.marginLeft = "1.2em";
             div.insertBefore(createbutton);
 			
-			var createToken = document.createElement('div');
-			createToken.setAttribute('style', 'display:none');
-			createToken.setAttribute('id', 'token');
-			div.insertBefore(createToken);
-			chrome.storage.sync.get('token', function(result) { createToken.innerHTML = result['token']; });
+            var createToken = document.createElement('div');
+            createToken.setAttribute('style', 'display:none');
+            createToken.setAttribute('id', 'token');
+            div.insertBefore(createToken);
+            chrome.storage.sync.get('token', function(result) { createToken.innerHTML = result['token']; });
 
 
             var s = document.createElement('script');
@@ -75,8 +75,8 @@ function func() {
 
         //add it to the page depending on whether its newsfeed or event
         if (isEvent) {
-			rems.insertBefore(div, document.getElementById("event_description"));
-			//rems.insertBefore(div);
+            rems.insertBefore(div, document.getElementById("event_description"));
+            //rems.insertBefore(div);
             div.style.backgroundColor = "white";
         }
         else {
@@ -85,8 +85,20 @@ function func() {
         }
         rems.zIndex = '100';
 
-        var myname = document.getElementsByClassName("fbxWelcomeBoxName");
-        getEventsForUser(myname[0].innerHTML);
+        var isAdmin = false;
+        var myname = document.getElementsByClassName("fbxWelcomeBoxName")[0].innerHTML;
+        if (isEvent)
+        {
+            var content = document.getElementById('event_featuring_line').innerHTML;
+            var text = $(content).text();
+            var pos = text.indexOf("Hosted by") + 10;
+            if(text.substring(pos) == myname)
+            {
+               isAdmin = true;
+            }
+        }
+        
+        getEventsForUser(myname, isAdmin);
 
     }
     else {
@@ -167,7 +179,6 @@ function checkbox_toggle(sender)
             }
         });
     }
-    update();
 }
 
 function getEventIDFromUrl()
@@ -176,13 +187,19 @@ function getEventIDFromUrl()
     return eventID;
 }
 
-function getEventsForUser(userName) {
+function getEventsForUser(userName, isAdmin) {
+
     var Task = Parse.Object.extend("Task");
     var t1 = new Task();
 
     var query = new Parse.Query(Task);
 
-    query.equalTo("User_name", userName);
+    if (isAdmin == false) {
+        query.equalTo("User_name", userName);
+    }
+    else {
+        query.equalTo("Event_id", getEventIDFromUrl());
+    }
     var events = new Array();
     var usedIds = new Array();
 
@@ -207,6 +224,7 @@ function getEventsForUser(userName) {
             var div = document.getElementById('todoList');
 
             for (i = 0; i < events.length; i++) {
+
                 if (isEvent == false || eventid == events[i][1]) {
                     
                     var header = document.createElement('h3');
@@ -224,20 +242,24 @@ function getEventsForUser(userName) {
                     var t1 = new Task();
 
                     var query = new Parse.Query(Task);
-
-                    query.equalTo("User_name", userName);
+                    
+                    if (isAdmin == false) {
+                        query.equalTo("User_name", userName);
+                    }
                     query.equalTo("Event_id", events[i][1]);
                                        
                     query.find({
                         success: function (tasks) {
                             for (var u = 0; u < tasks.length; u++) {
                                 var text = document.createElement('p');
-                                text.innerText = tasks[u].get('Task_name');
+                                text.innerText = tasks[u].get('Task_name')
+                                if (isAdmin)
+                                {
+                                    text.innerText += " - " + tasks[u].get('User_name');
+                                }
                                 text.style.textIndent = "5em";
                                 text.setAttribute('id', tasks[u].get('Event_id'));
-                                document.getElementById('box'+tasks[u].get('Event_id')).insertBefore(text);
-                                
-                                
+                                document.getElementById('box' + tasks[u].get('Event_id')).insertBefore(text);
 
                                 //create checkbox
                                 var checkbox = document.createElement('input');

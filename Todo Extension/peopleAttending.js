@@ -24,11 +24,16 @@ function populate(){
 	FB.api('/' + eventID, { access_token : accessToken}, function(response) {
 
 		var myName = document.getElementsByClassName("fbxWelcomeBoxName")[0].innerHTML; 
-		
-		
+
 		var isAdmin = (response.owner.name == myName);
+
 		if(isAdmin == true)
 		{
+			var taggy = document.createElement('div');
+			taggy.setAttribute('id','isAdmin');
+			taggy.style.display="none";
+			document.head.insertBefore(taggy);
+			
 			FB.api('/' + eventID + '/attending/', { access_token : accessToken}, function(response) {
 			for (var i = 0; i < response.data.length; i++) names[i] = (response.data[i].name);
 			names.sort();
