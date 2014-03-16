@@ -35,7 +35,7 @@ function func() {
         if (isEvent) {
             var createListBox = document.createElement('select');
             createListBox.setAttribute('name', 'attending');
-            createListBox.setAttribute('multiple', 'multiple');
+            //createListBox.setAttribute('multiple', 'multiple');
             createListBox.setAttribute('id', 'createlistbox');
             div.insertBefore(createListBox);
             //add create box
@@ -76,10 +76,10 @@ function func() {
             div.style.backgroundColor = "white";
         }
         else {
+
             rems.insertBefore(div);
         }
         rems.zIndex = '100';
-
 
         var myname = document.getElementsByClassName("fbxWelcomeBoxName");
         getEventsForUser(myname[0].innerHTML);
@@ -100,10 +100,10 @@ function createButtonClick()
     
     for (var i = 0; i < list.options.length; i++) {
         if (list.options[i].selected == true) {
-            alert(list.options[i].value);
            createTask(list.options[i].value, taskName, getEventIDFromUrl(), eventName, 2014, 1, 1);
         }
     }
+    update();
 }
 
 window.setInterval(function () {
@@ -163,6 +163,7 @@ function checkbox_toggle(sender)
             }
         });
     }
+    update();
 }
 
 function getEventIDFromUrl()
@@ -232,6 +233,8 @@ function getEventsForUser(userName) {
                                 text.setAttribute('id', tasks[u].get('Event_id'));
                                 document.getElementById('box'+tasks[u].get('Event_id')).insertBefore(text);
                                 
+                                
+
                                 //create checkbox
                                 var checkbox = document.createElement('input');
                                 checkbox.setAttribute("type", "checkbox");
@@ -241,6 +244,16 @@ function getEventsForUser(userName) {
                                 checkbox.onclick = checkbox_toggle;
                                 //put it after the text
                                 text.insertBefore(checkbox);
+                               
+                                var delbut = document.createElement('input');
+                                delbut.setAttribute('type', 'button');
+                                delbut.value = "✖";
+                                delbut.style.marginLeft = "0px";
+                                delbut.onclick = delete_button_clicked;
+                                delbut.style.border = "none";
+                                delbut.style.background = "white";
+                                text.insertBefore(delbut);
+                                
                             }
                         },
 
@@ -262,6 +275,34 @@ function getEventsForUser(userName) {
     });
 
 }
+
+function update()
+{
+    var element = document.getElementById('todoList');
+    element.parentElement.removeChild(element);
+}
+
+function delete_button_clicked(sender)
+{
+    var Task = Parse.Object.extend("Task");
+
+    var query = new Parse.Query(Task);
+
+    query.equalTo("objectId", sender.target.previousSibling.getAttribute('uid'));
+
+    query.find({
+        success: function (myObj) {
+            myObj[0].destroy({});
+            update();
+        },
+        error: function (error) {
+            alert("error");
+        }
+    });
+
+}
+
+
 
 function createTask(userName, taskName, eventId, eventName, year, month, date)
 {
