@@ -6,7 +6,7 @@
   "version": "1.0",
 
   "permissions": [
-	"tabs"
+	"tabs", "https://www.dkous.com/"
   ],
 
   "content_scripts": [
@@ -17,7 +17,13 @@
 		"https://www.facebook.com/events/*/*"
         ],
         "js": ["runscript.js","jquery-2.1.0.js", "parse-1.2.13.min.js"],
-		"run_at": "document_end"		
-	}
-  ]
+		"run_at": "document_end"
+		}],
+		"web_accessible_resources": ["peopleAttending.js"],
+		"browser_action": {
+			"default_icon": "icon.png",
+			"default_popup": "popup.html"
+		}		
+	
+  
 }

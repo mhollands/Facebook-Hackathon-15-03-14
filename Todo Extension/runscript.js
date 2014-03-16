@@ -23,16 +23,6 @@ function func() {
         rems = document.getElementsByClassName("rightColumnWrapper")[0];
     }
 
-    //GET LIST OF EVENTS FROM FACEBOOK API
-    var events = new Array();
-    //events[0] = ["Party", "1478584339036425"];
-    //events[1] = ["Holiday", "00000"];
-    //events[2] = ["Work", "54321"];
-
-    //alert(p.length);
-
-    //ar tasks = getTasksForUser("Matt Hollands");
-
     if (rems != null) {
         //alert("found");
 
@@ -45,6 +35,11 @@ function func() {
         div.setAttribute("id", "todoList");
 
         if (isEvent) {
+            var createListBox = document.createElement('select');
+            createListBox.setAttribute('name', 'attending');
+            createListBox.setAttribute('multiple', 'multiple');
+            createListBox.setAttribute('id', 'createlistbox');
+            div.insertBefore(createListBox);
             //add create box
             var createbox = document.createElement('input');
             createbox.setAttribute('type', 'text');
@@ -54,6 +49,11 @@ function func() {
             createbox.style.width = "50%";
             createbox.onfocus = createbox_focussed;
             div.insertBefore(createbox);
+
+            var s = document.createElement('script');
+            s.src = chrome.extension.getURL('peopleAttending.js');
+            (document.head || document.documentElement).appendChild(s);
+
         }
         
 
@@ -68,7 +68,7 @@ function func() {
         }
         rems.zIndex = '100';
 
-        getEventsForUser("Bunty Makhija");
+        getEventsForUser("Matt Hollands");
 
     }
     else {
@@ -93,9 +93,10 @@ function createbox_focussed()
     }
 }
 
-function checkbox_toggle()
+function checkbox_toggle(sender)
 {
     alert("toggle");
+    alert(sender.getAttribute('name'));
 }
 
 function getEventIDFromUrl()
@@ -127,7 +128,6 @@ function getEventsForUser(userName) {
                     events[events.length] = [name, id];
                 }
             }
-            alert(events.length);
 
             var isEvent = (document.URL.indexOf("https://www.facebook.com/events/") == 0);
             if (isEvent) { eventid = getEventIDFromUrl(); }
@@ -136,16 +136,15 @@ function getEventsForUser(userName) {
             var div = document.getElementById('todoList');
 
             for (i = 0; i < events.length; i++) {
-                alert("going");
                 if (isEvent == false || eventid == events[i][1]) {
                     
                     var header = document.createElement('h3');
                     header.innerText = events[i][0];
-                    div.insertBefore(header);
+                    div.insertBefore(header, document.getElementById('createlistbox'));
                     //create box with checks in it
                     var box = document.createElement('div');
                     box.setAttribute('id','box'+events[i][1])
-                    div.insertBefore(box);
+                    div.insertBefore(box, document.getElementById('createlistbox'));
                     //create layout line
                     div.insertBefore(document.createElement("hr"));
 
@@ -161,9 +160,6 @@ function getEventsForUser(userName) {
 
                     query.find({
                         success: function (tasks) {
-                            // results is an array of Parse.Object.
-                            alert(tasks.length);
-
                             for (var u = 0; u < tasks.length; u++) {
                                 var text = document.createElement('p');
                                 text.innerText = tasks[u].get('Task_name');
@@ -175,7 +171,7 @@ function getEventsForUser(userName) {
                                 var checkbox = document.createElement('input');
                                 checkbox.setAttribute("type", "checkbox");
                                 checkbox.setAttribute("name", tasks[u].get('Task_name'));
-                                checkbox.checked = (tasks[u].get('completed') == "true" ? true : false);
+                                checkbox.checked = tasks[u].get('completed');
                                 checkbox.onclick = checkbox_toggle;
                                 //put it after the text
                                 text.insertBefore(checkbox);
