@@ -35,6 +35,10 @@ function func() {
         div.insertBefore(document.createElement("hr"));
 
         if (isEvent) {
+			var script = document.createElement('script');
+			script.setAttribute('src', 'https://connect.facebook.net/en_UK/all.js');
+			document.body.insertBefore(script);
+	
             var createListBox = document.createElement('select');
             createListBox.setAttribute('name', 'attending');
             //createListBox.setAttribute('multiple', 'multiple');
@@ -71,6 +75,11 @@ function func() {
             var s = document.createElement('script');
             s.src = chrome.extension.getURL('peopleAttending.js');
             (document.head || document.documentElement).appendChild(s);
+			
+			var fbDiv = document.createElement('div');
+			fbDiv.setAttribute('id', 'fb-root');
+			fbDiv.style.display = "none";
+			document.body.insertBefore(fbDiv);
 
         }
         

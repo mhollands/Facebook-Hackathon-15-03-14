@@ -1,18 +1,13 @@
 eventID = document.URL.substring(32, 48);
 
-var fbDiv = document.createElement('div');
-				fbDiv.setAttribute('id', 'fb-root');
-				fbDiv.style.display = "none";
-				document.body.insertBefore(fbDiv);
 
-	var script = document.createElement('script');
-    script.setAttribute('src', 'https://connect.facebook.net/en_UK/all.js');
-    document.body.insertBefore(script);
+
+
 
 if(document.readyState == "complete")
 {
 	console.log("blahblah");
-	window.setTimeout(populate, 500);
+	populate();
 }
 	
 window.addEventListener("load", populate)
