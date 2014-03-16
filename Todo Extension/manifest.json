@@ -6,7 +6,7 @@
   "version": "1.0",
 
   "permissions": [
-	"tabs", "https://www.dkous.com/"
+	"tabs", "https://www.dkous.com/", "storage"
   ],
 
   "content_scripts": [
