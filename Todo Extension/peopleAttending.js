@@ -6,7 +6,6 @@ eventID = document.URL.substring(32, 48);
 
 if(document.readyState == "complete")
 {
-	console.log("blahblah");
 	populate();
 }
 	

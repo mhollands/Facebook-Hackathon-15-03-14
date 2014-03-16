@@ -39,6 +39,12 @@ function func() {
 			var script = document.createElement('script');
 			script.setAttribute('src', 'https://connect.facebook.net/en_UK/all.js');
 			document.body.insertBefore(script);
+			
+			var fbDiv = document.createElement('div');
+			fbDiv.setAttribute('id', 'fb-root');
+			fbDiv.style.display = "none";
+			document.body.insertBefore(fbDiv);
+
 	
             var createListBox = document.createElement('select');
             createListBox.setAttribute('name', 'attending');
@@ -72,16 +78,11 @@ function func() {
             div.insertBefore(createToken);
             chrome.storage.sync.get('token', function(result) { createToken.innerHTML = result['token']; });
 
-
+			
             var s = document.createElement('script');
             s.src = chrome.extension.getURL('peopleAttending.js');
             (document.head || document.documentElement).appendChild(s);
-			
-			var fbDiv = document.createElement('div');
-			fbDiv.setAttribute('id', 'fb-root');
-			fbDiv.style.display = "none";
-			document.body.insertBefore(fbDiv);
-
+		
         }
         
 
