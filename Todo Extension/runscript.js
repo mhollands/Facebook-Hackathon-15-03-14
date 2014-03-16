@@ -26,12 +26,13 @@ function func() {
 
         //insert layout breaks
         
-        rems.insertBefore(document.createElement("br"));
+        
 
         //create the overall div
         var div = document.createElement('div');
         div.setAttribute("id", "todoList");
         div.style.background = "white";
+        div.insertBefore(document.createElement("br"));
         div.insertBefore(document.createElement("hr"));
 
         if (isEvent) {
