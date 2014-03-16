@@ -5,10 +5,6 @@ function func() {
     Parse.$ = jQuery;
     Parse.initialize("AUHoFI9B7N6wfw0xjAtNv2AEpfNB7xpSlN67Rt07", "TkLHOAvw7UZDQ8LljMutMzRbGLeaS1rt5K3ByxFW");
 
-    //var script = document.createElement('script');
-    //script.setAttribute('src', 'http://www.parsecdn.com/js/parse-1.2.13.min.js');
-    //document.head.insertBefore(script);
-
     //myFunction();
 
     var isEvent = (document.URL.indexOf("https://www.facebook.com/events/") == 0);
@@ -204,106 +200,6 @@ function getEventsForUser(userName) {
     });
 
 }
-/*
-//go through every event
-for (var i = 0; i < events.length; i++) {
 
-    if (isEvent == false || eventid == events[i][1]) {
-        //create the event title
-        var header = document.createElement('h3');
-        header.innerText = events[i][0];
-        div.insertBefore(header);
-        //create box with checks in it
-        var box = document.createElement('div');
-        div.insertBefore(box);
-        //create layout line
-        div.insertBefore(document.createElement("hr"));
-
-        //GET LIST OF TODOS FROM PARSE
-        var items = new Array();
-        items[0] = ["movies", "true", "val1"];
-        items[1] = ["food", "false", "val2"];
-
-        //for every item to do
-        for (var u = 0; u < items.length; u++) {
-            //create a text description
-            var text = document.createElement('p');
-            text.innerText = items[u][0];
-            text.style.textIndent = "5em";
-            box.insertBefore(text);
-
-            //create checkbox
-            var checkbox = document.createElement('input');
-            checkbox.setAttribute("type", "checkbox");
-            checkbox.setAttribute("name", items[u][0]);
-            checkbox.checked = (items[u][1] == "true" ? true : false);
-            checkbox.onclick = checkbox_toggle;
-            //put it after the text
-            text.insertBefore(checkbox);
-        }
-
-    }
-}
-*/
-function getTasksForUser(userName)
-{
-    var Task = Parse.Object.extend("Task");
-    var t1 = new Task();
-
-    var query = new Parse.Query(Task);
-
-    query.equalTo("User_name", userName);
-
-    var results = new Array();
-
-    query.find({
-        success: function (res) {
-            // results is an array of Parse.Object.
-            alert("ok");
-            alert(res.length);
-            
-            for (var i = 0; i < res.length; i++) {
-                results[i] = [res[i].get("Task_name"), res[i].get("complete")];
-            }
-
-
-        },
-
-        error: function (error) {
-            // error is an instance of Parse.Error.
-            alert("error");
-        }
-    });
-
-    return results;
-
-}
-
-function myFunction()
-{
-
-    //Parse.$ = jQuery;
-    //Parse.initialize("AUHoFI9B7N6wfw0xjAtNv2AEpfNB7xpSlN67Rt07", "TkLHOAvw7UZDQ8LljMutMzRbGLeaS1rt5K3ByxFW");
-    var Task = Parse.Object.extend("Task");
-    var t1 = new Task();
-
-    var query = new Parse.Query(Task);
-    
-    query.equalTo("User_name", "Matt Hollands");
-    
-    query.find({
-        success: function (results) {
-            // results is an array of Parse.Object.
-            alert("ok");
-            alert(results.length);
-        },
-
-        error: function (error) {
-            // error is an instance of Parse.Error.
-            alert("error");
-        }
-    });
-   
-}
 
 
