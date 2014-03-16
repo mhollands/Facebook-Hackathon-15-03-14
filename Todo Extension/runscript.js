@@ -25,12 +25,14 @@ function func() {
         //alert("found");
 
         //insert layout breaks
+        
         rems.insertBefore(document.createElement("br"));
-        rems.insertBefore(document.createElement("hr"));
 
         //create the overall div
         var div = document.createElement('div');
         div.setAttribute("id", "todoList");
+        div.style.background = "white";
+        div.insertBefore(document.createElement("hr"));
 
         if (isEvent) {
             var createListBox = document.createElement('select');
@@ -229,6 +231,7 @@ function getEventsForUser(userName, isAdmin) {
                     
                     var header = document.createElement('h3');
                     header.innerText = events[i][0];
+                    header.style.marginLeft = "10px";
                     div.insertBefore(header, document.getElementById('createlistbox'));
                     //create box with checks in it
                     var box = document.createElement('div');
@@ -306,6 +309,9 @@ function update()
 {
     var element = document.getElementById('todoList');
     element.parentElement.removeChild(element);
+
+    //element = document.getElementById('breakline');
+    //element.parentElement.removeChild(element);
 }
 
 function delete_button_clicked(sender)
