@@ -6,7 +6,7 @@ eventID = document.URL.substring(32, 48);
 
 if(document.readyState == "complete")
 {
-	populate();
+	window.setTimeout(populate, 500);
 }
 	
 window.addEventListener("load", populate)
