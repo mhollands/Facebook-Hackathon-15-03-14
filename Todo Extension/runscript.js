@@ -147,8 +147,6 @@ function checkbox_toggle(sender)
         }
     }
     else {
-        alert("Unchecked");
-
         var Task = Parse.Object.extend("Task");
 
         var query = new Parse.Query(Task);
