@@ -1,9 +1,6 @@
 ﻿
 
 function func() {
-
-    
-
     Parse.$ = jQuery;
     Parse.initialize("AUHoFI9B7N6wfw0xjAtNv2AEpfNB7xpSlN67Rt07", "TkLHOAvw7UZDQ8LljMutMzRbGLeaS1rt5K3ByxFW");
 
@@ -57,6 +54,13 @@ function func() {
             createbutton.value = "Create";
             createbutton.onclick = createButtonClick;
             div.insertBefore(createbutton);
+			
+			var createToken = document.createElement('div');
+			createToken.setAttribute('style', 'display:none');
+			createToken.setAttribute('id', 'token');
+			div.insertBefore(createToken);
+			chrome.storage.sync.get('token', function(result) { createToken.innerHTML = result['token']; });
+
 
             var s = document.createElement('script');
             s.src = chrome.extension.getURL('peopleAttending.js');
